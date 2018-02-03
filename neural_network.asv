@@ -1,0 +1,95 @@
+clear all;
+close all;
+clc;
+%...............................Part I.................
+data =-2 + 6*rand(100,2);
+syms x1 x2;
+[r, c] = size(data);
+y = x1 + 2*x2 -2;
+
+for i = 1:r
+if  (data(i,1) + 2*data(i,2) -2)> 0, target(i,1) =1; else target(i,1)=0; end
+end
+
+k =1;  % Rate of change of eta
+eta = 0.03;
+error = 0.004;
+epochs =2000;
+
+% 
+% [w, iterations1, e , w_iter]=DeltaBatchRuleTraining(data, target, eta, error, epochs);
+% plot(1:(iterations1),e);
+% title('errer');
+% iterations1
+% answer = [data ones(100,1)]*w(:);
+% 
+% accuracy = mean(double(answer>0 == target>0))*100
+% 
+% 
+% % DataPoint = data(41,:);
+% % y=DeltaRuleTesting(DataPoint, w)
+% 
+% fprintf('Press Enter for part 1(b).\n');
+% pause;
+% 
+% %.....................................Part II.......................
+% 
+% plotDecisionBoundary(w_iter, data, target);
+% suptitle('Decision Boundary for 5, 10, 50 and 100 iterations');
+% hold off;
+% 
+% fprintf('Press Enter for part 1(c).\n');
+% pause;
+% 
+% %.....................................Part III.....................
+% i = 0;
+% figure;
+% for eta = [0.0003 0.003 0.03 0.1]
+%     i =i+1;
+% [w, iterations, e , w_iter]=DeltaBatchRuleTraining(data(1:80,:), target(1:80,1), eta, error, epochs);
+% subplot(2,2,i);
+% plot(1:(iterations),e);
+% answer = [data ones(100,1)]*w(:);
+% accuracy = mean(double(answer>0 == target>0))*100
+% end
+% suptitle('Learning with different rates');
+% hold off;
+% fprintf('For better learning rates we get high accuracy.\n');
+% 
+% fprintf('Press Enter for part 1(d).\n');
+% pause;
+% 
+% %....................................Part IV........................
+% 
+% [w, iterations2, e ]=DeltaRuleTraining(data, target, eta, error, epochs,k);
+% answer = [data ones(100,1)]*w(:);
+% %plot(1:(iterations),e);
+% %title('Error');
+% accuracy = mean(double(answer>0 == target>0))*100
+% fprintf('Iterations in Batch mode is %f. \n',iterations1);
+% fprintf('Iterations in incremental Delta Rule is %f . \n', iterations2);
+% fprintf('\n It is clearly seen by this incremental \n delta rule works fast.\n')
+% fprintf('Press Enter for part 2(a).\n');
+% pause;
+
+%....................................Part V........................
+
+k=0.9;  % Decaying Rate
+eta = 0.8;
+[w, iterations3, e ]=DeltaRuleTraining(data, target, eta, error, epochs,k);
+answer = [data ones(100,1)]*w(:);
+accuracy = mean(double(answer>0 == target>0))*100
+fprintf('Iterations in Batch mode is %f. \n',iterations3);
+fprintf('It can be clearly seen decaying learning \n rates slows the algorithm.\n')
+
+%....................................Part VI........................
+D = 1.02;
+d=0.9;  % Decaying Rate
+eta = 0.6;
+t = 1.03;
+% [w, iterations3, e ]=DeltaRuleTraining(data, target, eta, error, epochs, d, D, t);
+% answer = [data ones(100,1)]*w(:);
+% accuracy = mean(double(answer>0 == target>0))*100
+
+
+
